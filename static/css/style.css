@@ -5,12 +5,14 @@ body{
     flex-direction: column;
     align-items: center;
     color: white;
+    justify-self: center;
 }
 
 .container{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
     min-width: 0px;
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -54,14 +56,12 @@ body{
 }
 
 .filtry{
-    height: 100%;
-    flex-grow: 1;
+    height: 90vh;
     background-color: pink;
     display: flex;
-    width: 30%;
+    width: 20%;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .filtry .item{
@@ -72,16 +72,16 @@ body{
 }
 
 .produkty_lista{
+    height: 90vh;
+    box-shadow: none;
     background-color: #fdf3fa;
     align-content: stretch;
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-    .produkty{
-        display: flex;
-        flex-wrap: wrap; 
-    }
+    justify-content: flex-start;
     .baner{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         color: #b82e2e;
         background-color: antiquewhite;
         margin: 10px;
@@ -96,8 +96,10 @@ body{
     .produkty{
         display: flex;
         width: 100%;
+        flex-wrap: wrap; 
         justify-content: space-around;
         .produkt{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             color: #cb6ce6;
             background-color: antiquewhite;
             display: flex;
@@ -120,4 +122,14 @@ body{
 
 .przerywnik{
     background-color: #cb6ce6;
+}
+
+.footer{
+    background-image: linear-gradient(to right, #ff3131, #ff914d);
+    display: flex;
+    justify-content: space-between;
+    .item{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 }
