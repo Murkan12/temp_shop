@@ -62,12 +62,13 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-    .item{
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        margin: 10px;
-    }
+}
+
+.filtry .item{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 10px;
 }
 
 .produkty_lista{
