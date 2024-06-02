@@ -6,6 +6,16 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-/__pycache__/
 
+/__pycache__
+*.py[cod]
+
+# Ignore enviromental variables
 .env
+
+# Ignore virtual enviroment
+/venv
+
+# Ignore Sqlite and DB Sessions
+db.sqlite3
+temp_shop_db.session.sql
