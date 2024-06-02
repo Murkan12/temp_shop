@@ -19,6 +19,12 @@ body{
     cursor: pointer;
 }
 
+.text-button {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .item a {
     margin-bottom: 1em;
 }
