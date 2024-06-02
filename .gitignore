@@ -17,5 +17,6 @@
 /venv
 
 # Ignore Sqlite and DB Sessions
-db.sqlite3
-temp_shop_db.session.sql
+*.sqlite3
+*.db
+*.session.sql
