@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "temp_shop_db",
+            "database": "${workspaceFolder:temp_shop}/db.sqlite3"
+        }
+    ]
+}
