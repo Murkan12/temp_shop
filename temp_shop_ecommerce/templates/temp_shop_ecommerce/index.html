@@ -13,7 +13,11 @@
             </div>
             <div class="item">
                 <div class="item">konto</div>
-                <div class="item">zaloguj się</div>
+                <div class="item">
+                    <form action="{% url 'login' %}" method="get">
+                        <button type="submit" class="hover-button">zaloguj się</button>
+                    </form>
+                </div>
                 <img src="{% static 'images/basket-icon.png' %}" alt="" style="height: 10%; width: 7%; color: #b82e2e;">
             </div>
         </div>
