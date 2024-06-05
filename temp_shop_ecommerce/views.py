@@ -3,6 +3,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import UserRegisterForm
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from decouple import config
 
 # Create your views here.
 def index(request):
@@ -12,7 +15,12 @@ def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.is_active = False
+            
+            
+            send_mail('User account activation', f'Hi {user.username}!\nPlease click this link to finalize the account creation process: f{}')
+            
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
             return redirect('login')
@@ -43,3 +51,13 @@ def user_logout(request):
     logout(request)
     messages.info(request, 'You have successfully logged out.')
     return redirect('index')
+
+# TEST FUNCTION DO NOT IMPLEMENT
+def send_test_email(request):
+    try:
+        send_mail('Test Mail', 'This is test mail sent from Django.', from_email=config('EMAIL_HOST_USER'),
+              recipient_list=['loud3ds@gmail.com'], fail_silently=False)
+    except Exception as e:
+        return HttpResponse(f'Error occured: {e}')
+    
+    return HttpResponse('Test email sent successfully.')

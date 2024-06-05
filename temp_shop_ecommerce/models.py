@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.db import models, transaction
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
@@ -10,15 +11,16 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     stored_quantity = models.PositiveIntegerField()
 
-class Client(models.Model):
-    name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
-    login = models.CharField(max_length=20)
-    email = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
+#deprecieted
+#class Client(models.Model):
+#    name = models.CharField(max_length=255)
+#    surname = models.CharField(max_length=255)
+#    login = models.CharField(max_length=20)
+#    email = models.CharField(max_length=30)
+#    password = models.CharField(max_length=30)
 
 class OrderSummary(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=5, decimal_places=2)
     address = models.CharField(max_length=120)
     city = models.CharField(max_length=30)
