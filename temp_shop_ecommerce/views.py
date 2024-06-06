@@ -75,6 +75,12 @@ def user_cart(request):
 @login_required
 def create_order(request, product_id):
     if request.method == 'POST':
+        orders = Order.objects.all()
+        for order in orders:
+            if order.product.id == product_id:
+                order.quantity +=1
+                order.save()
+                return redirect('index')
         product = get_object_or_404(Product, id=product_id)
         order_summary = OrderSummary.objects.get(client=request.user)
         Order.objects.create(
@@ -85,12 +91,19 @@ def create_order(request, product_id):
         return redirect('index')
     return redirect('index')
 
+def delete_item(request, order_id):
+    order = get_object_or_404(Order, id=order_id, order_summary = OrderSummary.objects.get(client=request.user))
+    product = get_object_or_404(Product, id=order.product.id)
+    product.stored_quantity +=order.quantity
+    order.delete()
+    return redirect('cart')
+
 # TEST FUNCTION DO NOT IMPLEMENT
-def send_test_email(request):
+"""def send_test_email(request):
     try:
         send_mail('Test Mail', 'This is test mail sent from Django.', from_email=config('EMAIL_HOST_USER'),
               recipient_list=['loud3ds@gmail.com'], fail_silently=False)
     except Exception as e:
         return HttpResponse(f'Error occured: {e}')
     
-    return HttpResponse('Test email sent successfully.')
+    return HttpResponse('Test email sent successfully.')"""
