@@ -184,12 +184,3 @@ body{
         margin-right: 20px;
     }
 }
-
-.basket-link {
-    display: inline-block;
-    height: 10%;
-    width: 7%;
-    color: #b82e2e;
-    cursor: pointer;
-}
-
