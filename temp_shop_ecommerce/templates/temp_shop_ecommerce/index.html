@@ -18,12 +18,13 @@
                 <div class="text">
                     <a href="{% url 'login' %}" class="text-button">zaloguj się</a>
                 </div>
-                <img src="{% static 'images/basket-icon.png' %}" alt="" style="height: 10%; width: 7%; color: #b82e2e;">
+                <div>
+                    <a href="{% url 'cart' %}" class="basket-link">
+                        <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon">
+                    </a>
+                </div>
             </div>
         </div>
-
-        <!-- <div class="container przerywnik" style="height: 3px;">
-        </div> -->
 
         <div class="container kategorie">
 
@@ -46,45 +47,22 @@
             </div>
         </div>
 
-        <!-- <div class="container przerywnik" style="height: 3px;">
-        </div> -->
-
         <div class="container">
-
-            <!-- <div class="container filtry">
-                <div class="item">
-                    <p>filtry</p>
-                </div>
-                <div class="item">
-                    <p>filtr 1</p>
-                    <input type="text">
-                </div>
-                <div class="item">
-                    <p>filtr 2</p>
-                    <input type="text">
-                </div>
-                <div class="item">
-                    <p>filtr 3</p>
-                    <input type="text">
-                </div>
-                <div class="item">
-                    <p>filtr 4</p>
-                    <input type="text">
-                </div>
-                <div class="item">
-                    <p>filtr 5</p>
-                    <input type="text">
-                </div>
-            </div> -->
 
             <div class="container produkty_lista">
                 <div class="item baner">
                     baner reklamowy
                 </div>
                 <div class="item produkty">
+                    {% for product in products %}
                     <div class="item produkt">
-                        produkt 1
+                            {{ product.name }}
+                            <form method="post" action="{% url 'create_order' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" >Add to Order</button>
+                            </form>
                     </div>
+                    {% endfor %}
                     <div class="item produkt">
                         produkt 2
                     </div>

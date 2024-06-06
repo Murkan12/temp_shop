@@ -7,6 +7,8 @@ urlpatterns = [
     path('register/', views.user_register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
+    path('cart/', views.user_cart, name='cart'),
+    path('create_order/<int:product_id>/', views.create_order, name='create_order'),
     
     # Test
     path('send-test-email/', views.send_test_email, name="test_mail")

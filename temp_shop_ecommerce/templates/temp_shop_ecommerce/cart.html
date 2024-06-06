@@ -1,10 +1,20 @@
+html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Twój koszyk</title>
 </head>
 <body>
-$END$
+    <h1>Twój koszyk</h1>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>{{ order.product.name }} - Quantity: {{ order.quantity }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Koszyk jest pusty</p>
+    {% endif %}
 </body>
 </html>
+

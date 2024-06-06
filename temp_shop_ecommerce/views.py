@@ -1,25 +1,36 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import UserRegisterForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import OrderSummary, Order
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from decouple import config
+from .models import Product
 
 # Create your views here.
 def index(request):
-    return render(request, 'temp_shop_ecommerce/index.html')
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, 'temp_shop_ecommerce/index.html', context=context)
 
 def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
+            user = form.save(commit=True)
             user.is_active = False
+            order_summary = OrderSummary.objects.create(
+                client=user,
+                total_price=0,
+                address='Address',
+                city='City',
+                phone_number='Phone Number'
+            )
             
-            
-            send_mail('User account activation', f'Hi {user.username}!\nPlease click this link to finalize the account creation process: f{}')
+            #send_mail('User account activation', f'Hi {user.username}!\nPlease click this link to finalize the account creation process: f{}')
             
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
@@ -50,6 +61,28 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     messages.info(request, 'You have successfully logged out.')
+    return redirect('index')
+
+def user_cart(request):
+    order_summary = get_object_or_404(OrderSummary, client=request.user.id)
+
+    # Get all Orders associated with this OrderSummary
+    orders = Order.objects.filter(order_summary=order_summary)
+
+    # Pass the orders to the template
+    return render(request, 'temp_shop_ecommerce/cart.html', {'orders': orders})
+
+@login_required
+def create_order(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        order_summary = OrderSummary.objects.get(client=request.user)
+        Order.objects.create(
+            product=product,
+            order_summary=order_summary,
+            quantity=1
+        )
+        return redirect('index')
     return redirect('index')
 
 # TEST FUNCTION DO NOT IMPLEMENT
