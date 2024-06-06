@@ -12,12 +12,20 @@
                 <div class="text">temp_shop</div>
             </div>
             <div class="item">
+
                 <div class="text">
                     konto
                 </div>
+                {% if not user.is_authenticated %}
                 <div class="text">
                     <a href="{% url 'login' %}" class="text-button">zaloguj się</a>
                 </div>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div class="text">
+                    <a href="{% url 'logout' %}" class="text-button">wyloguj się</a>
+                </div>
+                {% endif %}
                 <div>
                     <a href="{% url 'cart' %}" class="basket-link">
                         <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon">
