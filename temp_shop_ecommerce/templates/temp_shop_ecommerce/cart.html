@@ -1,0 +1,24 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twój koszyk</title>
+</head>
+<body>
+    <h1>Twój koszyk</h1>
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>{{ order.product.name }} - Quantity: {{ order.quantity }}</li>
+                <a href="{% url 'delete_item' order.id %}" style="color: red; cursor: pointer; text-decoration: none;">x</a>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Koszyk jest pusty</p>
+    {% endif %}
+    <div class="text">
+        <a href="{% url 'index' %}">Powrót</a>
+    </div>
+</body>
+</html>
+
