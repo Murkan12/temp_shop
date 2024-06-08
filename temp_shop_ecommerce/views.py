@@ -75,7 +75,7 @@ def user_cart(request):
 @login_required
 def create_order(request, product_id):
     if request.method == 'POST':
-        orders = Order.objects.all()
+        orders = Order.objects.filter(order_summary= OrderSummary.objects.get(client=request.user))
         for order in orders:
             if order.product.id == product_id:
                 order.quantity +=1
