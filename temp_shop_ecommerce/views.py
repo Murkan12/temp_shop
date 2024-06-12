@@ -14,6 +14,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from decouple import config
 from .models import Product
+from django.db.models import Q
+
 
 # Create your views here.
 def index(request):
@@ -131,6 +133,17 @@ def delete_item(request, order_id):
     product.stored_quantity +=order.quantity
     order.delete()
     return redirect('cart')
+
+def search_view(request):
+    query = request.GET.get('query', '')
+    products = None
+
+    if query:
+        products = Product.objects.filter(
+            Q(name__istartswith=query)
+        )
+
+    return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
 
 # TEST FUNCTION DO NOT IMPLEMENT
 """def send_test_email(request):

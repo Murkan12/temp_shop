@@ -27,7 +27,7 @@
                 </div>
                 {% endif %}
                 <div>
-                    <a href="{% url 'cart' %}" class="basket-link">
+                    <a href="{% url 'cart' %}">
                         <img src="{% static 'images/basket-icon.png' %}" alt="Basket Icon" class="basket-icon" style="width: 80px; height: auto;">
                     </a>
                 </div>
@@ -50,8 +50,12 @@
             </div>
 
             <div class="item lupka">
-                <input type="text">
-                <img src="{% static 'images/search-icon.png' %}" alt="" width="10%">
+                <form action="{% url 'search' %}" method="get">
+                    <input type="text" name="query" placeholder="Search products...">
+                    <button type="submit">
+                        <img src="{% static 'images/search-icon.png' %}" alt="search" width="10%">
+                    </button>
+                </form>
             </div>
         </div>
 
