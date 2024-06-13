@@ -16,6 +16,7 @@ urlpatterns = [
     path('delete_item/<int:order_id>/', views.delete_item, name='delete_item'),
     path('delete_item/<int:order_id>/', views.delete_item, name='delete_item'),
     path('search/', views.search_view, name='search'),
+    path('payment/', views.payment_process, name='payment_process'),
     
     # Test
     #path('send-test-email/', views.send_test_email, name="test_mail")

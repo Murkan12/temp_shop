@@ -15,6 +15,9 @@ from django.http import HttpResponse
 from decouple import config
 from .models import Product
 from django.db.models import Q
+from django.conf import settings
+import paypalrestsdk
+from django.urls import reverse
 
 
 # Create your views here.
@@ -112,13 +115,17 @@ def user_cart(request):
 def create_order(request, product_id):
     if request.method == 'POST':
         orders = Order.objects.filter(order_summary= OrderSummary.objects.get(client=request.user))
+        order_summary = OrderSummary.objects.get(client=request.user)
         for order in orders:
             if order.product.id == product_id:
+                order_summary.total_price += order.product.price
                 order.quantity +=1
                 order.save()
+                order_summary.save()
                 return redirect('index')
         product = get_object_or_404(Product, id=product_id)
-        order_summary = OrderSummary.objects.get(client=request.user)
+        order_summary.total_price += product.price
+        order_summary.save()
         Order.objects.create(
             product=product,
             order_summary=order_summary,
@@ -129,7 +136,10 @@ def create_order(request, product_id):
 
 def delete_item(request, order_id):
     order = get_object_or_404(Order, id=order_id, order_summary = OrderSummary.objects.get(client=request.user))
+    order_summary = OrderSummary.objects.get(client=request.user)
     product = get_object_or_404(Product, id=order.product.id)
+    order_summary.total_price -= order.product.price * order.quantity
+    order_summary.save()
     product.stored_quantity +=order.quantity
     order.delete()
     return redirect('cart')
@@ -144,6 +154,36 @@ def search_view(request):
         )
 
     return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
+
+paypalrestsdk.configure({
+    'mode': 'sandbox',  # Change to 'live' for production
+    'client_id': 'my_id',
+    'client_secret': 'my_key'
+})
+
+def payment_process(request):
+    order = get_object_or_404(OrderSummary, client=request.user)
+
+    payment = paypalrestsdk.Payment({
+        'intent': 'sale',
+        'payer': {'payment_method': 'paypal'},
+        'redirect_urls': {
+            'return_url': request.build_absolute_uri(reverse('index')),
+            'cancel_url': request.build_absolute_uri(reverse('index')),
+        },
+        'transactions': [{
+            'amount': {'total': str(order.total_price), 'currency': 'USD'},
+            'description': 'Payment for your order',
+        }]
+    })
+
+    if payment.create():
+        for link in payment.links:
+            if link.rel == 'approval_url':
+                approval_url = link.href
+                return redirect(approval_url)
+    else:
+        return redirect('index')
 
 # TEST FUNCTION DO NOT IMPLEMENT
 """def send_test_email(request):
