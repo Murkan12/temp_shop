@@ -154,11 +154,28 @@ def search_view(request):
         )
 
     return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
+def price_filter(request):
+    try:
+        products = Product.objects.all()
+        minimum = request.GET.get('min_price', '')
+        maximum = request.GET.get('max_price', '')
+        if minimum:
+            products = products.filter(price__gte=minimum)
+
+        if maximum:
+            products = products.filter(price__lte=maximum)
+
+        if minimum and maximum:
+            products = products.filter(price__range=(minimum, maximum))
+        return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
+    except:
+        return render(request, 'temp_shop_ecommerce/search.html', {'products':[]})
+
 
 paypalrestsdk.configure({
     'mode': 'sandbox',  # Change to 'live' for production
-    'client_id': 'my_id',
-    'client_secret': 'my_key'
+    'client_id': 'AaTTmqw77F5AO8wLW-Adqgn7RwApTT-mRDiUhe-7TtiZs0yXzGz8q8nVYT7jUFPp50IiQSo2N06rBL8W',
+    'client_secret': 'EJU_p9iBYxx24OHnlU4r-6sEHys5-5BbmTNylzoU0rdOzsNF-B9UUW_sQH3Irz3ajxihgtQU8SQIyJSF'
 })
 
 def payment_process(request):
@@ -172,7 +189,7 @@ def payment_process(request):
             'cancel_url': request.build_absolute_uri(reverse('index')),
         },
         'transactions': [{
-            'amount': {'total': str(order.total_price), 'currency': 'USD'},
+            'amount': {'total': str(order.total_price), 'currency': 'PLN'},
             'description': 'Payment for your order',
         }]
     })

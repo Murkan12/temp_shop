@@ -35,6 +35,15 @@
         </div>
 
         <div class="container kategorie">
+            <div class="item lupka">
+                <form action="{% url 'filter' %}" method="get">
+                    <input type="text" name="min_price" placeholder="Min_price">
+                    <input type="text" name="max_price" placeholder="Max_price">
+                    <button type="submit">
+                        <p>cena minimalna</p>
+                    </button>
+                </form>
+            </div>
 
             <div class="text">
                 <p>kategoria</p>
