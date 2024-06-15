@@ -154,19 +154,22 @@ def search_view(request):
         )
 
     return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
+
 def price_filter(request):
     try:
-        products = Product.objects.all()
+        products = None
         minimum = request.GET.get('min_price', '')
         maximum = request.GET.get('max_price', '')
-        if minimum:
-            products = products.filter(price__gte=minimum)
-
-        if maximum:
-            products = products.filter(price__lte=maximum)
-
+        
         if minimum and maximum:
-            products = products.filter(price__range=(minimum, maximum))
+            products = Product.objects.filter(price__range=(minimum, maximum))
+        elif minimum:
+            products = Product.objects.filter(price__gte=minimum)
+        elif maximum:
+            products = Product.objects.filter(price__lte=maximum)
+        else:
+            products = Product.objects.all()
+
         return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
     except:
         return render(request, 'temp_shop_ecommerce/search.html', {'products':[]})
@@ -201,13 +204,3 @@ def payment_process(request):
                 return redirect(approval_url)
     else:
         return redirect('index')
-
-# TEST FUNCTION DO NOT IMPLEMENT
-"""def send_test_email(request):
-    try:
-        send_mail('Test Mail', 'This is test mail sent from Django.', from_email=config('EMAIL_HOST_USER'),
-              recipient_list=['loud3ds@gmail.com'], fail_silently=False)
-    except Exception as e:
-        return HttpResponse(f'Error occured: {e}')
-    
-    return HttpResponse('Test email sent successfully.')"""

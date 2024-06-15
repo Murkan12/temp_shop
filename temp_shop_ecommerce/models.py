@@ -10,6 +10,10 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     stored_quantity = models.PositiveIntegerField()
+    category = models.CharField(max_length=50, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 #deprecieted
 #class Client(models.Model):
@@ -25,11 +29,15 @@ class OrderSummary(models.Model):
     address = models.CharField(max_length=120)
     city = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order_summary = models.ForeignKey(OrderSummary, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if self.quantity > self.product.stored_quantity:
