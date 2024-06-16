@@ -35,37 +35,25 @@
         </div>
 
         <div class="container kategorie">
-            <div class="item lupka">
-                <form action="{% url 'filter' %}" method="get">
-                    <input type="text" name="min_price" placeholder="Min_price">
-                    <input type="text" name="max_price" placeholder="Max_price">
-                    <button type="submit">
-                        <p>cena minimalna</p>
-                    </button>
-                </form>
-            </div>
-            
-            <div class="text">
-                <p>kategoria</p>
-            </div>
-            <div class="text">
-                <p>kategoria</p>
-            </div>
-            <div class="text">
-                <p>kategoria</p>
-            </div>
-            <div class="text">
-                <p>kategoria</p>
+
+            <div class="item">
+                <p>kategorie</p>
             </div>
 
-            <div class="item lupka">
-                <form action="{% url 'search' %}" method="get">
-                    <input type="text" name="query" placeholder="Search products...">
-                    <button type="submit">
-                        <img src="{% static 'images/search-icon.png' %}" alt="search" width="10%">
-                    </button>
-                </form>
-            </div>
+            <form class="item" action="{% url 'filter' %}" method="get">
+                <div class="item_child">
+                    <input class="input input1" type="text" name="min_price" placeholder="cena minimalna">
+                    <input class="input input1" type="text" name="max_price" placeholder="cena maksymalna">
+                </div>
+            </form>
+
+            <form class="item item2" action="{% url 'search' %}" method="get">
+                <input class="input" type="text" name="query" placeholder="Search products...">
+                <button class="button" type="submit">
+                    <img class="img" src="{% static 'images/search-icon.png' %}" alt="search">
+                </button>
+            </form>
+        
         </div>
 
         <div class="container">
@@ -80,7 +68,7 @@
                             {{ product.name }}
                             <form method="post" action="{% url 'create_order' product.id %}">
                                 {% csrf_token %}
-                                <button type="submit" >Add to Order</button>
+                                <button class="button" type="submit" >Add to Order</button>
                             </form>
                     </div>
                     {% endfor %}
