@@ -36,7 +36,7 @@ def user_register(request):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             current_site = get_current_site(request)
-            """mail_subject = 'User account activation'
+            mail_subject = 'User account activation'
             message = render_to_string('temp_shop_ecommerce/registration/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -45,7 +45,7 @@ def user_register(request):
             })
             
             send_mail(mail_subject, message, 
-                      from_email=config('EMAIL_HOST_USER'), recipient_list=[user.email])"""
+                      from_email=config('EMAIL_HOST_USER'), recipient_list=[user.email])
             
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
