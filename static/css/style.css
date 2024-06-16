@@ -114,8 +114,9 @@ body{
     min-width: 0px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    height: auto;
+    justify-content: space-between;
+    height: 6vh;
+    width: 70%;
     .item{
         height: auto;
         margin: 10px;
@@ -124,27 +125,24 @@ body{
         align-items: center;
         min-width: 0px;
         flex-direction: column;
-        .item_child{
-            display: flex;
-            flex-direction: row;
-            .input1{
-                font-size: large;
-            }
-        }
     }
     .item2{
         display: flex;
         flex-direction: row;
-        width: auto;
-        height: auto;
-        .img{
-            width: 30%;
-            height: 40%;
-        }
-        .button{
-            width: 10%;
-            height: 200%;
-        }
+    }
+    .input{
+        height: 20%;
+        width: 50%;
+    }
+    .img{
+        min-width: 0px;
+        height: 100%;
+    }
+    .button{
+        width: 20%;
+        height: 24px;
+        margin-right: 5px;
+        box-shadow: none;
     }
 }
 
@@ -183,11 +181,19 @@ body{
             height: 100px;
             width: 28%;
             justify-content: space-around;
+            align-items: center;
             flex-wrap: wrap;
+            flex-direction: column;
             border: 3px solid;
             border-color: linear-gradient(to right, #ff5757 , #8c52ff);
             border-radius: 5px;
             margin: 10px;
+            .button{
+                padding: 5px;
+                color: #8c52ff;
+                border: 1px solid;
+                border-color: linear-gradient(to right, #ff5757 , #8c52ff);
+            }
 
         }
     }
@@ -204,5 +210,9 @@ body{
         width: 25%;
         margin-left: 20px;
         margin-right: 20px;
+        ul{
+            list-style-type: none;
+            margin: 5px;
+        }
     }
 }

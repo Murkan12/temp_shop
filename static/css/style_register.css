@@ -1,3 +1,22 @@
+.button{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FDDBE2;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-self: center;
+    justify-content: space-around;
+    transition-duration: 0.4s;
+    cursor: pointer;
+} 
+.button:hover{
+    background-color: #cb6ce6;
+}
+
 body{
     background-color: #FDE3E9;
     margin: 0;
@@ -50,7 +69,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     .item{
-        color: #cb6ce6;
+        color: black;
         font-size: large;
     }
 }
