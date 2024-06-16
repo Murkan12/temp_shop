@@ -39,21 +39,22 @@
             <div class="item">
                 <p>kategorie</p>
             </div>
-
-            <form class="item" action="{% url 'search' %}" method="get">
-                <div class="item_child">
-                    <input class="input input1" type="text" name="min_price" placeholder="cena minimalna">
-                    <input class="input input1" type="text" name="max_price" placeholder="cena maksymalna">
+            <form action="{% url 'search' %}" method="get">
+                <div class="item" >
+                    <div class="item_child">
+                        <input class="input input1" type="text" name="min_price" placeholder="cena minimalna">
+                        <input class="input input1" type="text" name="max_price" placeholder="cena maksymalna">
+                    </div>
+                </div>
+    
+                <div class="item item2">
+                    <input class="input" type="text" name="query" placeholder="Search products...">
+                    <button class="button" type="submit">
+                        <img class="img" src="{% static 'images/search-icon.png' %}" alt="search">
+                    </button>
                 </div>
             </form>
-
-            <form class="item item2" action="{% url 'search' %}" method="get">
-                <input class="input" type="text" name="query" placeholder="Search products...">
-                <button class="button" type="submit">
-                    <img class="img" src="{% static 'images/search-icon.png' %}" alt="search">
-                </button>
-            </form>
-        
+            
         </div>
 
         <div class="container">

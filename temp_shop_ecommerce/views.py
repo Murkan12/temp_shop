@@ -141,24 +141,46 @@ def delete_item(request, order_id):
 
 def search_view(request):
     query = request.GET.get('query', '')
-    minimum = request.GET.get('min_price', '')
-    maximum = request.GET.get('max_price', '')
+    min_price = request.GET.get('min_price', '')
+    max_price = request.GET.get('max_price', '')
+    
+    # Start with all products
     products = Product.objects.all()
 
+    # Apply the name filter if query is provided
     if query:
-        products = products.filter(
-            Q(name__istartswith=query)
-        )
+        products = products.filter(Q(name__istartswith=query))
 
-    if minimum and maximum:
-        products = products.filter(price__range=(minimum, maximum))
-    elif minimum:
-        products = products.filter(price__gte=minimum)
-    elif maximum:
-        products = products.filter(price__lte=maximum)
-    if not query and not minimum and not maximum: products = None
+    # Debug: Print the initial queryset count
+    print(f"Initial products count after name filter: {products.count()}")
 
-    return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
+    # Convert min_price and max_price to floats for comparison, if they are provided and not empty
+    try:
+        min_price = float(min_price) if min_price else None
+        max_price = float(max_price) if max_price else None
+    except ValueError:
+        # Handle the case where min_price or max_price are not valid numbers
+        min_price, max_price = None, None
+
+    # Debug: Print the min_price and max_price values
+    print(f"min_price: {min_price}, max_price: {max_price}")
+
+    # Apply price filters
+    if min_price is not None and max_price is not None:
+        products = products.filter(price__range=(min_price, max_price))
+    elif min_price is not None:
+        products = products.filter(price__gte=min_price)
+    elif max_price is not None:
+        products = products.filter(price__lte=max_price)
+
+    # Debug: Print the final queryset count after price filter
+    print(f"Final products count after price filter: {products.count()}")
+
+    # If no filters are applied and no products match the query, return an empty queryset
+    if not query and min_price is None and max_price is None:
+        products = Product.objects.none()
+
+    return render(request, 'temp_shop_ecommerce/search.html', {'products': products})
 
 paypalrestsdk.configure({
     'mode': 'sandbox',  # Change to 'live' for production
