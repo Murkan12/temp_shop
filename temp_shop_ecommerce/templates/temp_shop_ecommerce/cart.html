@@ -9,7 +9,7 @@ html
     {% if orders %}
         <ul>
             {% for order in orders %}
-                <li>{{ order.product.name }} - Quantity: {{ order.quantity }}</li>
+                <li>{{ order.product.name }} - Quantity: {{ order.quantity }} - Price: {{order.product.price}}</li>
                 <a href="{% url 'delete_item' order.id %}" style="color: red; cursor: pointer; text-decoration: none;">x</a>
             {% endfor %}
         </ul>
@@ -20,7 +20,6 @@ html
         <a href="{% url 'index' %}">Powrót</a>
     </div>
     <a href="{% url 'payment_process'%}">Proceed to Payment</a>
-
 </body>
 </html>
 

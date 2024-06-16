@@ -1,10 +1,22 @@
-from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import AbstractUser
 from django.db import models, transaction
-from django.contrib.auth.models import User
 
 # Create your models here.
+
+class CustomUser(AbstractUser):
+    def save(self, *args, **kwargs):
+        creating = self._state.adding
+        super().save(*args, **kwargs)
+        
+        if creating:
+            OrderSummary.objects.create(
+                client=self,
+                total_price=0,
+                address='Address',
+                city='City',
+                phone_number='Phone Number'
+            )
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -24,7 +36,7 @@ class Product(models.Model):
 #    password = models.CharField(max_length=30)
 
 class OrderSummary(models.Model):
-    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=5, decimal_places=2)
     address = models.CharField(max_length=120)
     city = models.CharField(max_length=30)
@@ -47,3 +59,12 @@ class Order(models.Model):
             self.product.stored_quantity -= self.quantity
             self.product.save(update_fields=['stored_quantity'])
             super().save(*args, **kwargs)
+            
+    def delete(self, *args, **kwargs):
+        order_price = self.quantity * self.product.price
+        
+        with transaction.atomic():
+            self.order_summary.total_price -= order_price
+            self.product.stored_quantity += self.quantity
+            self.order_summary.save(update_fields=['total_price'])
+            super().delete(*args, **kwargs)

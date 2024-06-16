@@ -18,7 +18,9 @@ from django.db.models import Q
 from django.conf import settings
 import paypalrestsdk
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 # Create your views here.
 def index(request):
@@ -41,14 +43,6 @@ def user_register(request):
                 'uid': uid,
                 'token': token
             })
-            
-            order_summary = OrderSummary.objects.create(
-                client=user,
-                total_price=0,
-                address='Address',
-                city='City',
-                phone_number='Phone Number'
-            )
             
             send_mail(mail_subject, message, 
                       from_email=config('EMAIL_HOST_USER'), recipient_list=[user.email])
@@ -84,7 +78,6 @@ def email_confirmation_sent(request):
 
 def activate_user(request, uidb64, token):
     try:
-        User = get_user_model()
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
@@ -102,6 +95,7 @@ def user_logout(request):
     messages.info(request, 'You have successfully logged out.')
     return redirect('index')
 
+@login_required
 def user_cart(request):
     order_summary = get_object_or_404(OrderSummary, client=request.user.id)
 
@@ -134,13 +128,14 @@ def create_order(request, product_id):
         return redirect('index')
     return redirect('index')
 
+@login_required
 def delete_item(request, order_id):
-    order = get_object_or_404(Order, id=order_id, order_summary = OrderSummary.objects.get(client=request.user))
-    order_summary = OrderSummary.objects.get(client=request.user)
-    product = get_object_or_404(Product, id=order.product.id)
-    order_summary.total_price -= order.product.price * order.quantity
-    order_summary.save()
-    product.stored_quantity +=order.quantity
+    order = get_object_or_404(Order, id=order_id, order_summary=OrderSummary.objects.get(client=request.user))
+    #order_summary = OrderSummary.objects.get(client=request.user)
+    #product = get_object_or_404(Product, id=order.product.id)
+    #order_summary.total_price -= order.product.price * order.quantity
+    #order_summary.save()
+    #product.stored_quantity +=order.quantity
     order.delete()
     return redirect('cart')
 

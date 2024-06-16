@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'temp_shop_ecommerce.apps.TempShopEcommerceConfig',
+    'temp_shop_ecommerce',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -130,6 +129,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/ecommerce/'
 LOGOUT_REDIRECT_URL = '/ecommerce/'
 
+# Redirect url if user auth is required and user not logged
+
+LOGIN_URL = '/ecommerce/login'
+
 # Email settings
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -143,3 +146,5 @@ DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
 # Paypal credentials
 PAYPAL_CLIENT_ID = 'my_id'
 PAYPAL_SECRET_KEY = 'my_key'
+
+AUTH_USER_MODEL = 'temp_shop_ecommerce.CustomUser'
