@@ -36,7 +36,7 @@ def user_register(request):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             current_site = get_current_site(request)
-            mail_subject = 'User account activation'
+            """mail_subject = 'User account activation'
             message = render_to_string('temp_shop_ecommerce/registration/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -45,11 +45,11 @@ def user_register(request):
             })
             
             send_mail(mail_subject, message, 
-                      from_email=config('EMAIL_HOST_USER'), recipient_list=[user.email])
+                      from_email=config('EMAIL_HOST_USER'), recipient_list=[user.email])"""
             
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
-            return redirect('email_confirmation_sent')
+            return redirect('index')
     else:
         form = UserRegisterForm()
     return render(request, 'temp_shop_ecommerce/register.html', {'form': form})
@@ -141,33 +141,26 @@ def delete_item(request, order_id):
 
 def search_view(request):
     query = request.GET.get('query', '')
-    products = None
+    minimum = request.GET.get('min_price', '')
+    maximum = request.GET.get('max_price', '')
+    products = Product.objects.all()
 
     if query:
-        products = Product.objects.filter(
+        products = products.filter(
             Q(name__istartswith=query)
         )
 
+    if minimum and maximum:
+        products = products.filter(price__range=(minimum, maximum))
+    elif minimum:
+        products = products.filter(price__gte=minimum)
+    elif maximum:
+        products = products.filter(price__lte=maximum)
+    if not query and not minimum and not maximum: products = None
+
     return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
 
-def price_filter(request):
-    try:
-        products = None
-        minimum = request.GET.get('min_price', '')
-        maximum = request.GET.get('max_price', '')
-        
-        if minimum and maximum:
-            products = Product.objects.filter(price__range=(minimum, maximum))
-        elif minimum:
-            products = Product.objects.filter(price__gte=minimum)
-        elif maximum:
-            products = Product.objects.filter(price__lte=maximum)
-        else:
-            products = Product.objects.all()
 
-        return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
-    except:
-        return render(request, 'temp_shop_ecommerce/search.html', {'products':[]})
 
 
 paypalrestsdk.configure({
