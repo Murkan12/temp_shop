@@ -1,17 +1,37 @@
-<form action="{% url 'search' %}" method="get">
-    <input type="text" name="query">
-    <button type="submit">Search</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+            <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/style_search.css' %}">
+        <title>temp_shop | search</title>
+    </head>
+    <body>
+        <div class="container header">
+            <p class="item">
+                wyszukiwanie produktów
+            </p>
+        </div>
 
-{% if products %}
-<ul>
-    {% for product in products %}
-    <li>{{ product.name }} - ${{ product.price }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No products found.</p>
-{% endif %}>
-<div class="text">
-    <a href="{% url 'index' %}">Powrót</a>
-</div>
+        <div class="container search">
+            <form action="{% url 'search' %}" method="get">
+                <input type="text" name="query">
+                <button type="submit">Search</button>
+            </form>
+            
+            {% if products %}
+            <ul>
+                {% for product in products %}
+                <li>{{ product.name }} - ${{ product.price }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No products found.</p>
+            {% endif %}>
+        </div>
+
+        <div class="container footer">
+            <a class="item" href="{% url 'index' %}">Powrót</a>
+        </div>
+    </body>

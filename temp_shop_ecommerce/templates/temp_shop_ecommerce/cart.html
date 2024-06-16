@@ -1,25 +1,38 @@
-html
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Twój koszyk</title>
+    <link rel="stylesheet" href="{% static 'css/style_cart.css' %}">
 </head>
 <body>
-    <h1>Twój koszyk</h1>
-    {% if orders %}
+
+    <div class="container header">
+        <p class="item">
+            Twój koszyk
+        </p>
+    </div>
+
+    <div class="container cart">
+        {% if orders %}
         <ul>
             {% for order in orders %}
                 <li>{{ order.product.name }} - Quantity: {{ order.quantity }} - Price: {{order.product.price}}</li>
                 <a href="{% url 'delete_item' order.id %}" style="color: red; cursor: pointer; text-decoration: none;">x</a>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>Koszyk jest pusty</p>
-    {% endif %}
-    <div class="text">
-        <a href="{% url 'index' %}">Powrót</a>
+        {% else %}
+        <p class="item">
+            Koszyk jest pusty
+        </p>
+        {% endif %}
     </div>
-    <a href="{% url 'payment_process'%}">Proceed to Payment</a>
+
+    <div class="container footer">
+        <a class="item" href="{% url 'index' %}">Powrót</a>
+        <a class="item" href="{% url 'payment_process'%}">Przejdź do płatności</a>
+    </div>
+
 </body>
 </html>
 

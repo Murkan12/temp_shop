@@ -43,6 +43,37 @@ body{
     cursor: pointer;
 }
 
+.input{
+    font-size: medium;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;
+    border: none;
+    margin: 3px;
+    padding: 3px;
+}
+
+.button{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #FDDBE2;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-self: center;
+    justify-content: space-around;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button:hover{
+    background-color: #cb6ce6;
+}
+
 .container{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
@@ -83,37 +114,38 @@ body{
     min-width: 0px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    .text{
-        font-size: x-large;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+    justify-content: space-around;
+    height: auto;
     .item{
+        height: auto;
         margin: 10px;
+        width: 20%;
         display: flex;
-        justify-content: end;
+        align-items: center;
         min-width: 0px;
+        flex-direction: column;
+        .item_child{
+            display: flex;
+            flex-direction: row;
+            .input1{
+                font-size: large;
+            }
+        }
     }
-    .lupka{
-        width: 30%;
+    .item2{
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        .img{
+            width: 10%;
+            height: 10%;
+        }
+        .button{
+            width: 10%;
+            height: 200%;
+        }
     }
-}
-
-.filtry{
-    height: 90vh;
-    background-color: pink;
-    display: flex;
-    width: 20%;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.filtry .item{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin: 10px;
 }
 
 .produkty_lista{
@@ -129,7 +161,6 @@ body{
     .baner{
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         color: #cb6ce6;
-        /* background-color: #FDDBE2; */
         margin: 10px;
         height: 120px;
         display: flex;
@@ -160,15 +191,6 @@ body{
 
         }
     }
-}
-
-.item{
-    display: flex;
-}
-
-.przerywnik{
-    background-color: #cb6ce6;
-    width: 78%;
 }
 
 .footer{
