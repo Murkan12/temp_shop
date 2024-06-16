@@ -160,9 +160,6 @@ def search_view(request):
 
     return render(request, 'temp_shop_ecommerce/search.html', {'products':products})
 
-
-
-
 paypalrestsdk.configure({
     'mode': 'sandbox',  # Change to 'live' for production
     'client_id': 'AaTTmqw77F5AO8wLW-Adqgn7RwApTT-mRDiUhe-7TtiZs0yXzGz8q8nVYT7jUFPp50IiQSo2N06rBL8W',
