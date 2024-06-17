@@ -118,6 +118,7 @@ body{
     height: 6vh;
     width: 70%;
     .item{
+        font-size: x-large;
         height: auto;
         margin: 10px;
         width: 20%;

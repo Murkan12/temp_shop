@@ -1,12 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style_confirmation.css' %}">
     <title>Email confirmation sent</title>
 </head>
 <body>
-    <h1>Email confirmation sent</h1>
-    <h3>Please check your mailbox for activation link for your account</h3>
+    <div class="container header">
+        <h1 class="item">Email confirmation sent</h1>
+    </div>
+
+    <div class="container display">
+        <h3 class="item">Please check your mailbox for activation link for your account</h3>
+    </div>
 </body>
 </html>

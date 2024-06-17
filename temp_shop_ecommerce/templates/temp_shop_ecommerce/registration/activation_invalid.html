@@ -1,13 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style_activation.css' %}">
     <title>Account activation failed</title>
 </head>
 <body>
-    <h1>Account activation has failed</h1>
+    <div class="container header">
+        <h1 class="item">Account activation has failed</h1>
+    </div>
 
-    <h3>Please contact our support to identify and deal with the issue</h3>
+    <div class="container display">
+        <h3 class="item">Please contact our support to identify and deal with the issue</h3>
+    </div>
 </body>
 </html>
