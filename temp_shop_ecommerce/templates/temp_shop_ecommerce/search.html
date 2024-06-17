@@ -15,9 +15,9 @@
         </div>
 
         <div class="container search">
-            <form action="{% url 'search' %}" method="get">
-                <input type="text" name="query">
-                <button type="submit">Search</button>
+            <form class="item" action="{% url 'search' %}" method="get">
+                <input class="input" type="text" name="query">
+                <button class="button" type="submit">Search</button>
             </form>
             
             {% if products %}
@@ -27,7 +27,7 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <p>No products found.</p>
+            <p class="item">No products found.</p>
             {% endif %}>
         </div>
 
