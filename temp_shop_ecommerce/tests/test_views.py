@@ -2,9 +2,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.core import mail
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
 
 from ..forms import UserRegisterForm
-from ..models import User
+from ..models import Product, Order, OrderSummary
+
+User = get_user_model()
 
 class EcomRegisterViewTestCase(TestCase):
     def setUp(self):
@@ -95,4 +98,27 @@ class EcomLoginViewTestCase(TestCase):
     def test_login_post_valid(self):
         response = self.client.post(self.url, self.valid_data)
         print(response.context['form'].errors)
- 
+
+class EcomCreateOrderViewTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(username='test', password='test1234564', email='test@email.com')
+        self.product = Product.objects.create(name='TEST1', description='TEST1 ITEM', price=10, stored_quantity=100, category='item')
+        
+        self.client.login(username='test', password='test1234564')
+        
+        self.valid_data = {
+            'user': self.user
+        }
+        
+    #def test_create_order_post(self):
+        #response = self.client.post(f'/ecommerce/create_order/{self.product.pk}/', self.valid_data)
+        #self.assertNotEqual(response.status_code, 404)
+        
+        #order_summary = OrderSummary.objects.get(client=self.user)
+        #self.assertIsNotNone(order_summary)
+        
+        #order = Order.objects.get(order_summary=order_summary, product=self.product)
+        #self.assertIsNotNone(order)
+        
+        #self.assertRedirects(response, '/ecommerce/')
+        

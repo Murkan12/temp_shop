@@ -149,7 +149,7 @@ products = [
         updated_at=datetime.now()
     ),
     Product(
-        name="Camping Tent for 4 Persons",
+        name="Camping Tent for 4 People",
         description="Spacious and easy-to-set-up camping tent for 4 persons. Waterproof and durable.",
         price=79.99,
         stored_quantity=50,
